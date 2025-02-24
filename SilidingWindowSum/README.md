@@ -1,4 +1,8 @@
 # Sliding Window Sum
+## Colaborators
+- Braulio Solorio
+- Tijash Salamanca
+  
 ## About
  a CUDA kernel that takes a vector of floats with
 a minimum of 5 elements, applies a sliding window of 2 elements backwards and 2 forwards, calculates

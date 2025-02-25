@@ -1,15 +1,3 @@
-﻿/***
-* SLIDING WINDOW SUM
-* 
-* launch a CUDA kernel that takes a vector of floats with a minimum of 5 elements, 
-* applies a sliding window of 2 elements backwards and 2 forwards, calculates the average 
-* of those elements and the current element and saves the result in the same index of the 
-* current element but in another vector. The maximum size of the vector is the maximum 
-* number of threads per block in X.
-* 
-* @Author: Braulio Solorio
-* @Author: Tijash Salamanca
-*/
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 #include <stdio.h>
@@ -51,8 +39,8 @@ int main() {
 	std::cout << "\nShow Final Vectors? (y/n)\n[i]: ";
 	std::cin >> showVectorsChar;
 
-	bool showVectors = showVectorsChar != 'n'; 
-	
+	bool showVectors = showVectorsChar != 'n';
+
 
 	int* vecA, * vecB;
 	int* dev_vecA, * dev_vecB;
@@ -63,7 +51,7 @@ int main() {
 	cudaMalloc((void**)&dev_vecA, sizeof(int) * vecSize);
 	if (!cudaOperationSucced("Cuda Malloc of dev_vecA")) return 1;
 
-	 cudaMalloc((void**)&dev_vecB, sizeof(int) * vecSize);
+	cudaMalloc((void**)&dev_vecB, sizeof(int) * vecSize);
 	if (!cudaOperationSucced("Cuda Malloc of dev_vecB")) return 1;
 
 	for (int i = 0; i < vecSize; i++) {
@@ -113,8 +101,8 @@ int main() {
 		std::cout << std::endl;
 	}
 
-	std::cout << "CPU: " << CPU_TIME << std::endl;
-	std::cout << "GPU: " << GPU_TIME << std::endl;
+	printf("CPU: %.10f\n", CPU_TIME);
+	printf("GPU: %.10f\n", GPU_TIME);
 
 	free(vecA);
 	free(vecB);
@@ -134,12 +122,12 @@ int main() {
 *	@brief vecB[2] = (1 + 2 + 3 + 4 + 5) / 5 = 3
 *	@brief vecB[3] = (2 + 3 + 4 + 5 + 1) / 5 = 3
 *   @brief vecB = [3,3,3,3,3,]
-* 
-* 
+*
+*
 * @param vecA - a pointer to the first array of integers
 * @param vecB - a pointer to the second array that will be transformed
 * @param size - the size of the vectors.
-* 
+*
 * @returns void
 */
 __global__ void transformToAverageVector(int* vecA, int* vecB, int size) {
@@ -171,7 +159,7 @@ __host__ void transformToAverageVectorHost(int* vecA, int* vecB, int size) {
 
 /*
 * Displays a vector in console
-* 
+*
 * @param vec - the vector to be displayed
 * @param size - the size of the vector to be displayed
 * @param name - A name tag to the vector that will be displayed in console
@@ -184,7 +172,7 @@ __host__ void printVector(int* vec, int size, std::string name = "") {
 
 /*
 * Check the device properties and returns the max number of threads in the X dimension or -1 if an error occurred
-* 
+*
 * @returns a integer representing the maximun number of threads in the X dimension or -1 if an error occurred
 */
 __host__ int getMaxThreadNum() {
@@ -202,7 +190,7 @@ __host__ int getMaxThreadNum() {
 
 /*
 * Gets the last cuda Error and if error is not cudaSuccess then prints it in console:
-* 
+*
 * @param action - a description tag to know when the error occurred
 * @returns if the cuda error is equal to cudaSuccess
 */
